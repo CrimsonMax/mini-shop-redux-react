@@ -13,6 +13,8 @@ const store = createStore(
   applyMiddleware(reduxThunk)
 )
 
+// FUCK!!!!!!!!!!!!
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
