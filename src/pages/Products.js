@@ -1,37 +1,24 @@
 import { Component } from 'react'
 import MainNavigation from '../components/MainNavigation'
-import tree from '../renderTree'
 import './Products.css'
+import { addProduct } from '../store/actions'
+import { connect } from 'react-redux'
 
 class Products extends Component {
 
-  product = [
-    { id: 'p1', title: 'Gaming Mouse', price: 29.99 },
-    { id: 'p2', title: 'Harry Potter 3', price: 9.99 },
-    { id: 'p3', title: 'Used plastic bottle', price: 0.99 },
-    { id: 'p4', title: 'Half-dried plant', price: 2.99 }
-  ]
-
-  add(x) {
-    let update = this.props.parentState.find(z => z.id === x.id)
-    update ? update.quantity++ : this.props.parentState.push({ ...x, quantity: 1 })
-    tree()
-  }
-
   render() {
-
     return (
       <>
-        <MainNavigation cart={this.props.parentState} />
+        <MainNavigation cart={this.props.itemCount} />
         <main className="products">
           <ul>
-            {this.product.map(good => (
+            {this.props.product.map(good => (
               <li key={good.id}>
                 <div>
                   <strong>{good.title}</strong> - ${good.price}
                 </div>
                 <div>
-                  <button onClick={() => this.add(good)}>
+                  <button onClick={this.props.addProduct.bind(this, good)}>
                     Add to Cart
                   </button>
                 </div>
@@ -44,4 +31,22 @@ class Products extends Component {
   }
 }
 
-export default Products
+const mapStateToProps = state => {
+  return {
+    product: state.product,
+    itemCount: state.cart.reduce((count, curItem) => {
+      return count + curItem.quantity;
+    }, 0)
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addProduct: good => dispatch(addProduct(good))
+  }
+}
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+  )(Products)

@@ -3,11 +3,6 @@ import { NavLink } from 'react-router-dom'
 import './MainNavigation.css'
 
 class MainNavigation extends Component {
-
-  cartItemCount = this.props.cart.reduce((count, curItem) => {
-    return count + curItem.quantity;
-  }, 0)
-
   render() {
     return (
       <header className="main-navigation">
@@ -17,7 +12,7 @@ class MainNavigation extends Component {
               <NavLink to='/'>Products</NavLink>
             </li>
             <li>
-              <NavLink to='/cart'>Cart ({this.cartItemCount})</NavLink>
+              <NavLink to='/cart'>Cart ({this.props.cart})</NavLink>
             </li>
           </ul>
         </nav>

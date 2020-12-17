@@ -6,16 +6,12 @@ import { Component } from 'react';
 
 class App extends Component {
 
-  state = {
-    cart: []
-  }
-
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path='/' component={() => <Products parentState={this.state.cart} />} exact />
-          <Route path='/cart' component={() => <Cart parentState={this.state.cart} />} exact />
+          <Route path='/' component={Products} exact />
+          <Route path='/cart' component={Cart} exact />
         </Switch>
       </BrowserRouter>
     );

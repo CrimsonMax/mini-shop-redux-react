@@ -1,30 +1,25 @@
 import { Component } from 'react'
 import MainNavigation from '../components/MainNavigation'
-import tree from '../renderTree'
 import './Cart.css'
+import { removeProduct } from '../store/actions'
+import { connect } from 'react-redux'
 
 class Cart extends Component {
-
-  delete(x) {
-    let update = this.props.parentState.find(z => z.id === x.id)
-    update.quantity > 1 ? update.quantity-- : this.props.parentState.splice(update, 1)
-    tree()
-  }
 
   render() {
     return (
       <>
-        <MainNavigation cart={this.props.parentState} />
+        <MainNavigation cart={this.props.itemCount} />
         <main className="cart">
-          {this.props.parentState.length <= 0 && <p>No Item in the Cart!</p>}
+          {this.props.cartShop.length <= 0 && <p>No Item in the Cart!</p>}
           <ul>
-            {this.props.parentState.map(item => (
+            {this.props.cartShop.map(item => (
               <li key={item.id}>
                 <div>
                   <strong>{item.title}</strong> - ${item.price} ({item.quantity})
             </div>
                 <div>
-                  <button onClick={() => this.delete(item)}>
+                  <button onClick={this.props.removeProduct.bind(this, item.id)}>
                     Remove from Cart
                   </button>
                 </div>
@@ -37,4 +32,22 @@ class Cart extends Component {
   }
 }
 
-export default Cart
+const mapStateToProps = state => {
+  return {
+    cartShop: state.cart,
+    itemCount: state.cart.reduce((count, curItem) => {
+      return count + curItem.quantity;
+    }, 0)
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    removeProduct: id => dispatch(removeProduct(id))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Cart)
