@@ -1,4 +1,10 @@
 import './index.css';
-import tree from './renderTree';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-tree()
+
+ReactDOM.render(
+    <App />,
+  document.getElementById('root')
+);

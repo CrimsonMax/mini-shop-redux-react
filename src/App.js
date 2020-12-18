@@ -3,21 +3,20 @@ import Products from './pages/Products'
 import Cart from './pages/Cart'
 import './App.css';
 import { Component } from 'react';
+import GlobalState from './context/GlobalState';
 
 class App extends Component {
 
-  state = {
-    cart: []
-  }
-
   render() {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route path='/' component={() => <Products parentState={this.state.cart} />} exact />
-          <Route path='/cart' component={() => <Cart parentState={this.state.cart} />} exact />
-        </Switch>
-      </BrowserRouter>
+      <GlobalState>
+        <BrowserRouter>
+          <Switch>
+            <Route path='/' component={Products} exact />
+            <Route path='/cart' component={Cart} exact />
+          </Switch>
+        </BrowserRouter>
+      </GlobalState>
     );
   }
 }
