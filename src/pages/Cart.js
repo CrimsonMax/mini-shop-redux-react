@@ -5,17 +5,14 @@ import ShopContent from '../context/shop-context'
 
 class Cart extends Component {
 
-  // delete(x) {
-  //   let update = this.props.parentState.find(z => z.id === x.id)
-  //   update.quantity > 1 ? update.quantity-- : this.props.parentState.splice(update, 1)
-  // }
-
   render() {
     return (
       <ShopContent.Consumer>
         { context => (
           <>
-            <MainNavigation />
+            <MainNavigation cartItemCount={context.cart.reduce((count, curItem) => {
+              return count + curItem.quantity;
+            }, 0)} />
             <main className="cart">
               {context.cart.length <= 0 && <p>No Item in the Cart!</p>}
               <ul>
@@ -25,7 +22,7 @@ class Cart extends Component {
                       <strong>{item.title}</strong> - ${item.price} ({item.quantity})
                     </div>
                     <div>
-                      <button onClick={() => this.delete(item)}>
+                      <button onClick={context.deleteProduct.bind(this, item)}>
                         Remove from Cart
                       </button>
                     </div>

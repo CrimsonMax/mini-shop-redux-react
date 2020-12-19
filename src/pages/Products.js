@@ -10,7 +10,9 @@ class Products extends Component {
       <ShopContent.Consumer>
         { context => (
           <>
-            <MainNavigation />
+            <MainNavigation cartItemCount={context.cart.reduce((count, curItem) => {
+              return count + curItem.quantity;
+            }, 0)} />
             <main className="products">
               <ul>
                 {context.product.map(good => (
@@ -19,7 +21,7 @@ class Products extends Component {
                       <strong>{good.title}</strong> - ${good.price}
                     </div>
                     <div>
-                      <button onClick={context.addProduct.bind(this,good)}>
+                      <button onClick={context.addProduct.bind(this, good)}>
                         Add to Cart
                       </button>
                     </div>

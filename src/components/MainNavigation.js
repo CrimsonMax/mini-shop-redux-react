@@ -1,15 +1,8 @@
 import { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import './MainNavigation.css'
-import ShopContent from '../context/shop-context'
 
 class MainNavigation extends Component {
-
-  static contextType = ShopContent
-
-  cartItemCount = this.context.cart.reduce((count, curItem) => {
-    return count + curItem.quantity;
-  }, 0)
 
   render() {
     return (
@@ -20,7 +13,7 @@ class MainNavigation extends Component {
               <NavLink to='/'>Products</NavLink>
             </li>
             <li>
-              <NavLink to='/cart'>Cart ({this.cartItemCount})</NavLink>
+              <NavLink to='/cart'>Cart ({this.props.cartItemCount})</NavLink>
             </li>
           </ul>
         </nav>

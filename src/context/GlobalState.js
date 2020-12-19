@@ -14,16 +14,17 @@ class GlobalState extends Component {
   }
 
   addProduct = good => {
-    console.log(good)
     const newCart = [...this.state.cart]
     let update = newCart.find(z => z.id === good.id)
     update ? update.quantity++ : newCart.push({ ...good, quantity: 1 })
-    this.setState({ cart: newCart}, () => console.log(this.state.cart))
+    this.setState({ cart: newCart})
   }
 
   deleteProduct = item => {
-    let update = this.props.parentState.find(z => z.id === item.id)
-    update.quantity > 1 ? update.quantity-- : this.props.parentState.splice(update, 1)
+    const newCart = [...this.state.cart]
+    let update = newCart.find(z => z.id === item.id)
+    update.quantity > 1 ? update.quantity-- : newCart.splice(update, 1)
+    this.setState({ cart: newCart})
   }
 
   render() {
@@ -32,7 +33,8 @@ class GlobalState extends Component {
         {
           product: this.state.product,
           cart: this.state.cart,
-          addProduct: this.addProduct
+          addProduct: this.addProduct,
+          deleteProduct: this.deleteProduct
         }
       }>
         {this.props.children}
