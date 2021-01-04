@@ -1,14 +1,7 @@
-import { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import './MainNavigation.css'
 
-class MainNavigation extends Component {
-
-  cartItemCount = this.props.cart.reduce((count, curItem) => {
-    return count + curItem.quantity;
-  }, 0)
-
-  render() {
+const MainNavigation = props => {
     return (
       <header className="main-navigation">
         <nav>
@@ -17,13 +10,12 @@ class MainNavigation extends Component {
               <NavLink to='/'>Products</NavLink>
             </li>
             <li>
-              <NavLink to='/cart'>Cart ({this.cartItemCount})</NavLink>
+              <NavLink to='/cart'>Cart ({props.cartItemCount})</NavLink>
             </li>
           </ul>
         </nav>
       </header>
     )
-  }
 }
 
 export default MainNavigation
