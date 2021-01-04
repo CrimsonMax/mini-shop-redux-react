@@ -1,6 +1,5 @@
 import { Component } from 'react'
 import MainNavigation from '../components/MainNavigation'
-import tree from '../renderTree'
 import './Cart.css'
 
 class Cart extends Component {
@@ -8,7 +7,6 @@ class Cart extends Component {
   delete(x) {
     let update = this.props.parentState.find(z => z.id === x.id)
     update.quantity > 1 ? update.quantity-- : this.props.parentState.splice(update, 1)
-    tree()
   }
 
   render() {
